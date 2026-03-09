@@ -19,7 +19,7 @@ cd /workspace
 git clone https://github.com/SALA-AI-LATAM/hackathon-participants.git
 ```
 
-Everything in `/workspace` persists across pod stop/restart. You only need to clone once.
+Everything in `/workspace` persists on the network volume across sessions. You only need to clone once.
 
 ---
 
@@ -48,7 +48,7 @@ In the JupyterLab file browser, navigate to your track's notebook:
 
 Double-click the notebook to open it, then run cells from the top:
 
-1. **Install cell** — installs Python packages (runs once per pod start)
+1. **Install cell** — installs Python packages (runs once per session)
 2. **Credentials cell** — auto-detects your `participant-download.env` file
 3. **Download cell** — downloads your track's dataset to `/workspace/hackathon_data/`
 
@@ -56,32 +56,21 @@ Downloads support **resume** — if interrupted, re-run the cell and it picks up
 
 ---
 
-## 5. After a Pod Restart
+## 5. Starting a New Session
 
-When you stop and restart your pod:
+Pods with network volumes cannot be stopped — only **terminated**. Termination destroys the container but preserves everything in `/workspace` on the network volume. Each work session follows this cycle:
 
-- Your **data** (`/workspace/`) and **code** are preserved (backed by a persistent network volume)
-- You **do** need to re-run the pip install cell (installed packages don't persist)
-- You do **not** need to re-download data or re-upload credentials
-
-Just open your notebook and run from the top — the download cell will skip files that are already present.
-
----
-
-## 6. If You See a Migration Prompt
-
-RunPod may occasionally need to migrate your pod to a different server (e.g., when restarting a stopped pod whose GPU was reassigned). If you see a migration prompt:
-
-1. Choose **"Automatically migrate Pod data"**
-2. Wait for the migration to complete — this may take a few minutes
-3. Your data and credentials in `/workspace` are preserved (they live on a network volume)
-4. **Immediately notify organizers via WhatsApp with your new pod ID** — the budget watchdog tracks pods by ID, and an unregistered pod will be auto-stopped
-5. Share the new JupyterLab URL with your team (it changes after migration)
-6. Re-run the pip install cell in your notebook (installed packages don't persist across migrations)
+1. When done working, the Dev **terminates** the pod (there is no "stop" option)
+2. All data and code in `/workspace` are safe on the network volume
+3. Next session: the Dev **deploys a new pod**, selects the GPU type, and attaches the team's network volume
+4. Share the new JupyterLab URL with the team (it changes every session)
+5. Message organizers with the new pod ID (for budget tracking)
+6. Re-run the pip install cell in your notebook (installed packages don't persist between sessions)
+7. The download cell will skip files that already exist — no need to re-download data
 
 ---
 
-## 7. Pulling Updates
+## 6. Pulling Updates
 
 If the hackathon repo is updated during the event:
 
@@ -96,7 +85,7 @@ git pull
 
 ## Tips
 
-- **Stop your pod** when your team is done working — it bills by the second
-- **Use Git** for your team's code — push before stopping the pod, pull when restarting
+- **Terminate your pod** when your team is done working — it bills by the second. Your data is safe on the network volume.
+- **Use Git** for your team's code — push before terminating, pull at the start of each session
 - **BRUV track:** Start with one sub-video (~4 GB) rather than the full 65 GB dataset
 - **Multiple teammates:** Everyone can have JupyterLab open at the same time via the shared URL. Coordinate who's editing what to avoid conflicts

@@ -40,9 +40,9 @@ The key idea: develop and iterate on your laptop and Colab (free), and use RunPo
 
 Each team designates one person as the GPU liaison ("Dev"). This person is the only one who needs a RunPod account. Their responsibilities:
 
-- Start and stop the team's GPU pod
-- Share the JupyterLab URL with the rest of the team
-- Communicate with organizers about GPU-related requests: Your team may choose to switch to a pod with different GPUs or may need to migrate pods when re-starting them.
+- Deploy and terminate the team's GPU pod
+- Share the new JupyterLab URL with the team at the start of each session (it changes every time)
+- Communicate with organizers about GPU-related requests (e.g., switching to a pod with different GPUs)
 
 Everyone else on the team does **NOT** need a RunPod account. You'll access the GPU pod through a JupyterLab link that your Dev shares — it opens in any web browser.
 
@@ -183,43 +183,38 @@ RunPod is your team's paid GPU resource. Use it for serious training runs — no
 
 #### For the Dev (GPU liaison)
 
-**Starting your pod:**
+**Start-of-session checklist (deploying a pod):**
 
 1. Log into the RunPod console (runpod.io/console)
 2. Switch to the team account (top-left dropdown)
-3. Go to **Pods** → find your team's pod → click **Start**
+3. Deploy a new pod — select your GPU type and attach your team's network volume
 4. Wait for status to show **Running** (1–2 minutes)
 5. Click **Connect** → **Connect to Jupyter Lab (Port 8888)**
-6. Copy the JupyterLab URL and share it with your team in the team chat
+6. Share the new JupyterLab URL with your team (it changes every session)
+7. Message organizers via WhatsApp with the new pod ID (for budget tracking)
 
-**Stopping your pod (IMPORTANT — saves budget):**
+**End-of-session checklist (terminating a pod):**
 
-1. Go to **Pods** → your team's pod → click **Stop**
-2. Your files in `/workspace` are preserved
+1. Make sure teammates have pushed their code to Git
+2. Go to **Pods** → your team's pod → click **Terminate**
+3. Your data is safe — everything in `/workspace` is preserved on the network volume
 
-> Always stop your pod when your team is done working. A running pod bills by the second. There's an automatic safety timer, but don't rely on it.
-
-**Pod migration:** When restarting a stopped pod, RunPod may prompt you to migrate (this happens when the GPU was reassigned while stopped). If you see this:
-
-1. Choose **"Automatically migrate Pod data"** — your `/workspace` data is preserved on the network volume
-2. **Immediately message organizers via WhatsApp with the new pod ID** — the budget watchdog tracks by pod ID, and unregistered pods get auto-stopped
-3. The JupyterLab URL will change — re-share it with your team
-4. Re-run the pip install cell in your notebook
+> Always terminate your pod when your team is done working. A running pod bills by the second. There's an automatic safety timer, but don't rely on it.
 
 **Rules:**
-- Only start/stop your team's pod — do not touch other teams' pods
-- Do not create new pods — unauthorized pods are automatically detected and terminated
+- Only deploy/terminate your team's pod — do not touch other teams' pods
+- Do not create new pods outside the normal workflow — unauthorized pods are automatically detected and terminated
 - If you need a different GPU or configuration, request it in the team-lead + organizers WhatsApp chat
 
 #### For everyone (using JupyterLab)
 
-Once your Dev starts the pod and shares the URL:
+Once your Dev deploys the pod and shares the URL:
 
 1. Open the JupyterLab URL in your browser — no account needed
 2. You'll see a file browser on the left with `/workspace`
 3. Clone the hackathon repo if not already there, open your track's notebook
 
-The `/workspace` directory lives on a persistent **network volume** — your files survive pod stop/restart and even pod migration. Everything outside `/workspace` (like `/root` or `/tmp`) is wiped on stop.
+The `/workspace` directory lives on a persistent **network volume** — your files persist across sessions even though the pod is terminated and redeployed each time. Everything outside `/workspace` (like `/root` or `/tmp`) is rebuilt fresh each session.
 
 **Suggested `/workspace` layout:**
 
@@ -269,9 +264,9 @@ mkdir -p /workspace/.ssh-keys
 echo "ssh-ed25519 AAAA... teammate@laptop" >> /workspace/.ssh-keys/authorized_keys
 ```
 
-Keys are automatically restored on every pod restart — no repeated setup needed. Your team's keys only exist on your pod, not on any other team's pod.
+Keys are automatically restored in every new pod session (they persist on the network volume). Your team's keys only exist on your volume, not on any other team's.
 
-**To activate immediately (without waiting for pod restart):**
+**To activate immediately within the current session:**
 
 ```bash
 mkdir -p /root/.ssh
@@ -292,19 +287,19 @@ Each team has a fixed GPU budget (you'll be told the exact amount at the start).
 | Pod state | GPU billing | Storage billing |
 |---|---|---|
 | Running | Yes (e.g., ~$0.59/hr for RTX 4090) | Included |
-| Stopped | No | Tiny (~$0.20/GB/month, negligible) |
+| Terminated (between sessions) | No | Network volume only (~$0.07/GB/month) |
 
 Data downloads from R2 are always free — no egress fees. Download as much as you need.
 
 ### 5.2 Budget enforcement
 
-Organizers run a budget watchdog that tracks each team's cumulative spend. If your team exceeds its budget, your pod will be **automatically stopped**. The watchdog also enforces a maximum continuous runtime to catch forgotten pods.
+Organizers run a budget watchdog that tracks each team's cumulative spend. If your team exceeds its budget, your pod will be **automatically terminated**. The watchdog also enforces a maximum continuous runtime to catch forgotten pods.
 
 If you think your budget was consumed too quickly or need an exception, message the team WhatsApp chat.
 
 ### 5.3 Tips to stretch your budget
 
-- Stop your pod whenever you're not actively running GPU workloads
+- Terminate your pod whenever you're not actively running GPU workloads
 - Develop on your laptop or Colab — free environments for writing code, debugging, exploring data
 - Use the GPU pod only for training — don't use it to browse data or edit code
 - Pull only the data you need — start with a subset, scale up when your approach is working
