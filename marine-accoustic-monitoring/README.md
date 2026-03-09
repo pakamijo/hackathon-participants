@@ -303,7 +303,7 @@ pip install git+https://github.com/Project-CETI/wham
 
 **References:**
 - Paradise et al. (2025) — WhAM: Whale Acoustics Model. NeurIPS 2025.
-- Garcia-Aguilar et al. (2023) — VampNet: Music Generation via Masked Acoustic Token Modeling
+- Flores Garcia et al. (2023) — VampNet: Music Generation via Masked Acoustic Token Modeling
 - Project CETI: https://www.projectceti.org/ | Code: https://github.com/Project-CETI/wham
 
 ---
