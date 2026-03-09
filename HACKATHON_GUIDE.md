@@ -84,7 +84,7 @@ The fastest way to get started is to open a track's starter notebook directly in
 | Track | Starter Notebook |
 |---|---|
 | Precipitation Nowcasting | `precipitation-nowcasting/precipitation_nowcasting.ipynb` |
-| Marine Acoustic Monitoring | `marine-accoustic-monitoring/acoustic_explorer.ipynb` |
+| Marine Acoustic Monitoring | `marine-acoustic-monitoring/acoustic_explorer.ipynb` |
 | BRUV Fish Counting | `bruv-fish-counting/bruv_explorer.ipynb` |
 
 Each notebook includes setup cells at the top that handle installing dependencies, downloading `r2_download.py`, and pulling the dataset. You can also use `data_download.ipynb` for a standalone download flow.
@@ -218,7 +218,7 @@ The `/workspace` directory is persistent — your files survive pod stop/restart
 /workspace/
 ├── hackathon-participants/        # cloned starter repo
 │   ├── precipitation-nowcasting/
-│   ├── marine-accoustic-monitoring/
+│   ├── marine-acoustic-monitoring/
 │   └── bruv-fish-counting/
 ├── hackathon_data/                # downloaded datasets (auto-created by r2_download.py)
 │   ├── precipitation-nowcasting/

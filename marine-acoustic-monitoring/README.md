@@ -4,7 +4,7 @@
 
 **`acoustic_explorer.ipynb`** — load underwater audio, plot spectrograms, and listen to clips in your browser.
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SALA-AI-LATAM/hackathon-participants/blob/main/marine-accoustic-monitoring/acoustic_explorer.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SALA-AI-LATAM/hackathon-participants/blob/main/marine-acoustic-monitoring/acoustic_explorer.ipynb)
 
 > **This document is a starting point, not a recipe.** It may contain errors and is deliberately open-ended. The best hackathon projects will go in directions we didn't anticipate.
 
@@ -51,7 +51,7 @@ The Colab subset is enough for all notebook demos. The core subset gives more fi
 ## Dataset Structure
 
 ```
-marine-accoustic-monitoring/
+marine-acoustic-monitoring/
 ├── 5783/                       # Hydrophone unit 5783
 │   ├── *.wav                   # 16 recordings, 20 min each, 144 kHz
 │   ├── *.log.xml               # 4,166 metadata files (deployment log)
