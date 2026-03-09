@@ -179,6 +179,8 @@ The notebook's setup cells handle everything: installing packages, downloading `
 
 RunPod is your team's paid GPU resource. Use it for serious training runs — not for writing code or exploring data (do that on your laptop or Colab for free).
 
+> **First time on RunPod?** See [RUNPOD_SETUP.md](RUNPOD_SETUP.md) for a step-by-step walkthrough: starting your pod, uploading credentials, and running your first notebook.
+
 #### For the Dev (GPU liaison)
 
 **Starting your pod:**
