@@ -18,6 +18,17 @@
 
 **Kaggle competition:** https://www.kaggle.com/competitions/marine-conservation-with-migra-mar
 
+### Kaggle API setup
+
+The label CSVs (species counts per frame) are hosted on Kaggle. The starter notebook downloads them automatically via the Kaggle API. To set this up:
+
+1. **Create a Kaggle account** at [kaggle.com](https://www.kaggle.com) (if you don't have one)
+2. **Join the competition:** go to the [competition page](https://www.kaggle.com/competitions/marine-conservation-with-migra-mar) → click **Join Competition** and accept the rules (required before the API allows data downloads)
+3. **Get your API key:** go to [kaggle.com/settings](https://www.kaggle.com/settings) → scroll to **API** → under **Legacy API Credentials**, click **Create New Token** — this downloads a `kaggle.json` file
+4. **Upload `kaggle.json`** to the Colab file panel (drag and drop into the left sidebar), or place it in your working directory for local use
+
+> **Important:** Use **Legacy API Credentials**, not "API Tokens (Recommended)". The newer token format requires `kagglehub` and is not compatible with the standard `kaggle` CLI.
+
 ## Data
 
 ### On Kaggle (CSV labels)
@@ -28,8 +39,6 @@ The Kaggle competition data tab has:
 |------|-------------|
 | `CumulativeMaxN.csv` | Frame-level species counts with timestamps — the main label file |
 | `TimeFirstSeen.csv` | First appearance time of each species |
-| `MaxN.csv` | Maximum count per species per video (ground truth leaderboard) |
-| `MaxN_testsubmission.csv` | Submission template |
 
 **Key columns in `CumulativeMaxN.csv`:**
 - `Filename` — which sub-video (e.g., `LGH020002.MP4`)
