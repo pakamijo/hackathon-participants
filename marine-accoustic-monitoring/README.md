@@ -26,26 +26,27 @@ The domain experts have not yet confirmed the presence of marine animal sounds (
 
 Both directions are equally valid. Talk to the domain experts early to figure out which approach fits your team.
 
-### Core vs. Full Dataset
+### Dataset Sizes
 
-The full dataset is ~57 GB (926 WAV files, ~97 hours of audio). For Colab and quick starts, download the **core** subset:
+The full dataset is ~57 GB (926 WAV files, ~97 hours of audio). For Colab, use the **colab** subset (single 425 MB download):
 
 | Subset | Size | Files | Audio | What's included |
 |--------|------|-------|-------|-----------------|
-| **`marine-acoustic-core`** | ~7.3 GB | 123 WAVs | ~12 hours | 100 Pilot + 20 unit-6478 + 3 unit-5783, spread across time |
+| **`marine-acoustic-colab`** | ~425 MB | 11 WAVs | ~1.5 hours | 5 Pilot + 4 unit-6478 + 2 unit-5783, day/night coverage. **Use this on Colab.** |
+| `marine-acoustic-core` | ~7.3 GB | 123 WAVs | ~12 hours | 100 Pilot + 20 unit-6478 + 3 unit-5783, spread across time |
 | `marine-acoustic-full` *(not yet uploaded)* | ~57 GB | 926 WAVs | ~97 hours | Everything — all 3 units, all recordings |
 
 ```python
 import r2_download as hd
 
-# Core subset (recommended for Colab)
-stats = hd.download_dataset(manifest, dataset_name="marine-acoustic-core")
+# Colab subset — single 425 MB download, all 3 units (recommended for Colab)
+stats = hd.download_dataset(manifest, dataset_name="marine-acoustic-colab")
 
-# Full dataset (local/RunPod only — 57 GB, not yet uploaded to R2)
-# stats = hd.download_dataset(manifest, dataset_name="marine-acoustic-full")
+# Core subset (local/RunPod — 7.3 GB, 123 files)
+# stats = hd.download_dataset(manifest, dataset_name="marine-acoustic-core")
 ```
 
-The core subset is enough for all project ideas below.
+The Colab subset is enough for all notebook demos. The core subset gives more files for batch analysis.
 
 ## Dataset Structure
 
