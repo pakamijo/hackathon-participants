@@ -11,7 +11,16 @@ import os
 from pathlib import Path
 
 import boto3
-from tqdm import tqdm
+
+# Use widget progress bars in Jupyter notebooks, text bars elsewhere
+try:
+    from IPython import get_ipython
+    if get_ipython() is not None:
+        from tqdm.notebook import tqdm
+    else:
+        from tqdm import tqdm
+except (ImportError, NameError):
+    from tqdm import tqdm
 
 
 # ============================================================================
